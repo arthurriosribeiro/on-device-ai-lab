@@ -4,75 +4,108 @@ fun main() {
 
 private fun startProgram() {
     while (true) {
-        val numberList = readValidNumberList()
-        println()
+        val numberList = readNumberList()
 
-        val targetNumber = readValidTarget()
+        val targetNumber = readTarget()
 
-        twoPointerSum(numberList, targetNumber)
+
+        val sortedList = numberList.sorted()
+        val result = twoPointersSum(sortedList, targetNumber)
+
+        printResult(result, sortedList, targetNumber)
     }
 }
 
-private fun readValidNumberList(): List<Float> {
+private fun readNumberList(): List<Float> {
     while (true) {
         print("Provide a number list separated by commas with at least 4 numbers: ")
         val numberListString = readlnOrNull()
-        val items = numberListString?.split(",")
-        val numberList = mutableListOf<Float>()
 
-        if (items == null) {
-            println("Please, provide a list with valid numbers.")
-        } else if (items.any { it.toFloatOrNull() == null }) {
-            println("All elements must be a number")
-        } else if (items.size < 4) {
-            println("Please enter at least 4 numbers")
-        } else {
-            items.forEach { numberList.add(it.trim().toFloat()) }
+        val numberList = validateNumberList(numberListString)
+
+        if (numberList != null) {
             return numberList
         }
     }
 }
 
-private fun readValidTarget(): Float {
+private fun readTarget(): Float {
     while (true) {
         print("Now provide the desired sum target: ")
         val targetString = readlnOrNull()
-        val targetNumber = targetString?.toFloatOrNull()
 
-        if (targetNumber == null) {
-            println("Please enter a valid number.")
-        } else {
-            return targetNumber
+        val target = validateTarget(targetString)
+        if (target != null) {
+            return target
         }
     }
 }
 
-private fun twoPointerSum(numberList: List<Float>, target: Float) : Pair<Int, Int>? {
+internal fun validateNumberList(input: String?): List<Float>? {
+    val items = input?.split(",")
+    val numberList = mutableListOf<Float>()
+
+    if (items == null) {
+        println("Please, provide a list with valid numbers.")
+    } else if (items.any { it.toFloatOrNull() == null }) {
+        println("All elements must be a number")
+    } else if (items.size < 4) {
+        println("Please enter at least 4 numbers")
+    } else {
+        items.forEach { numberList.add(it.trim().toFloat()) }
+        return numberList
+    }
+
+    return null
+}
+
+internal fun validateTarget(input: String?): Float? {
+    val targetNumber = input?.toFloatOrNull()
+
+    if (targetNumber == null) {
+        println("Please enter a valid number.")
+        return null
+    } else {
+        return targetNumber
+    }
+}
+
+internal fun twoPointersSum(numberList: List<Float>, target: Float): Pair<Int, Int>? {
     var leftPointIndex = 0
     var rightPointIndex = numberList.size - 1
-    var points: Pair<Int, Int>? = Pair(leftPointIndex, rightPointIndex)
-    val sortedList = numberList.sorted()
     while (leftPointIndex < rightPointIndex) {
-        val sum = sortedList[leftPointIndex] + sortedList[rightPointIndex]
+        val sum = numberList[leftPointIndex] + numberList[rightPointIndex]
 
         if (sum == target) {
-            println("To achieve your target, we sum the ${leftPointIndex + 1}th number and the ${rightPointIndex + 1}th number.")
-            println("${sortedList[leftPointIndex]} + ${sortedList[rightPointIndex]} = $target\n")
-            break
+            return Pair(leftPointIndex, rightPointIndex)
         } else if (sum < target) {
             leftPointIndex++
-            points = Pair(leftPointIndex, rightPointIndex)
         } else {
             rightPointIndex--
-            points = Pair(leftPointIndex, rightPointIndex)
         }
     }
 
-    if (leftPointIndex == rightPointIndex) {
-        println("It is not possible to achieve your target using the provided number list.\n")
-        points = null
-    }
+    return null
+}
 
-    print("Pair: $points\n")
-    return points
+private fun printResult(result: Pair<Int, Int>?, numberList: List<Float>, target: Float) {
+    if (result == null) {
+        println("It is not possible to achieve your target using the provided number list.\n")
+    } else {
+
+        println(
+            "To achieve your target, we sum the ${getIndexLabel(result.first + 1)} " +
+                    "number and the ${getIndexLabel(result.second + 1)} number."
+        )
+        println("${numberList[result.first]} + ${numberList[result.second]} = $target\n")
+    }
+}
+
+private fun getIndexLabel(index: Int): String {
+    return when (index) {
+        1 -> "first"
+        2 -> "second"
+        3 -> "third"
+        else -> "${index}th"
+    }
 }
