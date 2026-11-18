@@ -5,3 +5,4 @@ plugins {
 rootProject.name = "on-device-ai-lab"
 
 include(":algorithms")
+include("cli-helper")
