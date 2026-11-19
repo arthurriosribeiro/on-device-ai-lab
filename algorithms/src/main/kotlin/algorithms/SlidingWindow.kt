@@ -20,30 +20,41 @@ object SlidingWindow {
     }
 
     internal fun slidingWindowSum(numbers: List<Float>, target: Int): SlidingWindowDTO? {
-        var firstIndex = -1
-        var lastIndex = 0
+        var firstIndex = 0
+        var lastIndex = target - 1
         var sum: Float
-        var average = 0f
+        var maxSum: Float
+        var average: Float
         var slidingWindow: SlidingWindowDTO? = null
+        val sumList = numbers.subList(firstIndex, target)
+        sum = sumList.sum()
+        maxSum = sum
+        slidingWindow = SlidingWindowDTO(
+            target = target,
+            sum = maxSum,
+            average = maxSum / target,
+            numberList = numbers,
+            indexes = listOf(0..lastIndex)
+        )
 
         while (lastIndex < numbers.size - 1) {
+            val outgoingNumber = numbers[firstIndex]
             firstIndex++
-            lastIndex = firstIndex + target
-            val sumList = numbers.subList(firstIndex, lastIndex)
-            sum = sumList.sum()
-            val currentAverage = sumList.average().toFloat()
-            println("Current average: $currentAverage")
+            lastIndex = firstIndex + (target - 1)
+            val currentSum = sum - outgoingNumber + numbers[lastIndex]
+            sum = currentSum
 
-            if (average < currentAverage) {
-                average = currentAverage
+            if (maxSum < currentSum) {
+                maxSum = currentSum
+                average = currentSum / target
                 slidingWindow = SlidingWindowDTO(
                     target = target,
-                    sum = sum,
+                    sum = maxSum,
                     average = average,
                     numberList = numbers,
                     indexes = listOf(firstIndex..lastIndex)
                 )
-            } else break
+            }
         }
 
         return slidingWindow
