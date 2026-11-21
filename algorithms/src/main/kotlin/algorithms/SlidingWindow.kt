@@ -45,7 +45,7 @@ object SlidingWindow {
             sum = maxSum,
             average = maxSum / window,
             numberList = numbers,
-            indexes = 0..lastIndex
+            indices = 0..lastIndex
         )
 
         while (lastIndex < numbers.size - 1) {
@@ -63,7 +63,7 @@ object SlidingWindow {
                     sum = maxSum,
                     average = average,
                     numberList = numbers,
-                    indexes = firstIndex..lastIndex
+                    indices = firstIndex..lastIndex
                 )
             }
         }
@@ -76,7 +76,7 @@ object SlidingWindow {
             println("No sliding-window found")
         } else {
             println("Using the list ${slidingWindowDTO.numberList} and getting ${slidingWindowDTO.window} numbers from this list" +
-                    "on index ${slidingWindowDTO.indexes}, " +
+                    " on index ${slidingWindowDTO.indices}, " +
                     "we get a sum result ${slidingWindowDTO.sum} with ${slidingWindowDTO.average} as average.")
         }
     }

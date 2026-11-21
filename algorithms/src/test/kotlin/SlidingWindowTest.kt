@@ -26,7 +26,7 @@ class SlidingWindowTest {
                 numberList = numberList,
                 sum = 0f,
                 average = 0f,
-                indexes = 0..1,
+                indices = 0..1,
             )
         }
     }
@@ -39,7 +39,7 @@ class SlidingWindowTest {
                 numberList = numberList,
                 sum = 0f,
                 average = 0f,
-                indexes = 0..1,
+                indices = 0..1,
             )
         }
     }
@@ -57,7 +57,7 @@ class SlidingWindowTest {
         val window = 3
 
         val slidingWindow = slidingWindowSum(list, window)
-        assertEquals(3..5, slidingWindow.indexes)
+        assertEquals(3..5, slidingWindow.indices)
         assertEquals(56f, slidingWindow.sum)
         assertEquals(56f / 3, slidingWindow.average, tolerance)
     }
@@ -75,7 +75,7 @@ class SlidingWindowTest {
         val window = 3
 
         val slidingWindow = slidingWindowSum(list, window)
-        assertEquals(0..2, slidingWindow.indexes)
+        assertEquals(0..2, slidingWindow.indices)
         assertEquals(45f, slidingWindow.sum)
         assertEquals(45f / 3, slidingWindow.average, tolerance)
     }
@@ -86,7 +86,7 @@ class SlidingWindowTest {
         val window = 3
 
         val slidingWindow = slidingWindowSum(list, window)
-        assertEquals(2..4, slidingWindow.indexes)
+        assertEquals(2..4, slidingWindow.indices)
         assertEquals(46f, slidingWindow.sum)
         assertEquals(46f / 3, slidingWindow.average, tolerance)
     }
@@ -97,7 +97,7 @@ class SlidingWindowTest {
         val window = 3
         val slidingWindow = slidingWindowSum(list, window)
 
-        assertEquals(1..3, slidingWindow.indexes)
+        assertEquals(1..3, slidingWindow.indices)
         assertEquals(46f, slidingWindow.sum)
         assertEquals(46f / 3, slidingWindow.average, tolerance)
     }
@@ -108,7 +108,7 @@ class SlidingWindowTest {
         val window = 2
         val slidingWindow = slidingWindowSum(list, window)
 
-        assertEquals(3..4, slidingWindow.indexes)
+        assertEquals(3..4, slidingWindow.indices)
         assertEquals(-4f, slidingWindow.sum)
         assertEquals(-4f / 2, slidingWindow.average, tolerance)
     }
@@ -119,7 +119,7 @@ class SlidingWindowTest {
         val window = 4
         val slidingWindow = slidingWindowSum(list, window)
 
-        assertEquals(0..3, slidingWindow.indexes)
+        assertEquals(0..3, slidingWindow.indices)
         assertEquals(16f, slidingWindow.sum)
         assertEquals(16f / 4, slidingWindow.average, tolerance)
     }
@@ -130,7 +130,7 @@ class SlidingWindowTest {
         val window = 1
         val slidingWindow = slidingWindowSum(list, window)
 
-        assertEquals(3..3, slidingWindow.indexes)
+        assertEquals(3..3, slidingWindow.indices)
         assertEquals(8f, slidingWindow.sum)
         assertEquals(8f, slidingWindow.average, tolerance)
     }
@@ -141,7 +141,7 @@ class SlidingWindowTest {
         val window = 2
         val slidingWindow = slidingWindowSum(numbers, window)
 
-        assertEquals(2..3, slidingWindow.indexes)
+        assertEquals(2..3, slidingWindow.indices)
         assertEquals(51f, slidingWindow.sum)
         assertEquals(51f / 2, slidingWindow.average, tolerance)
     }
