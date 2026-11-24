@@ -7,7 +7,7 @@ fun getIndexLabel(index: Int): String {
     }
 }
 
-fun validateNumberList(input: String?): List<Float>? {
+fun validateNumberList(input: String?, listSize: Int): List<Float>? {
     val items = input?.split(",")
     val numberList = mutableListOf<Float>()
 
@@ -15,8 +15,8 @@ fun validateNumberList(input: String?): List<Float>? {
         println("Please, provide a list with valid numbers.")
     } else if (items.any { it.toFloatOrNull() == null }) {
         println("All elements must be a number")
-    } else if (items.size < 4) {
-        println("Please enter at least 4 numbers")
+    } else if (items.size < listSize) {
+        println("Please enter at least $listSize numbers")
     } else {
         items.forEach { numberList.add(it.trim().toFloat()) }
         return numberList
