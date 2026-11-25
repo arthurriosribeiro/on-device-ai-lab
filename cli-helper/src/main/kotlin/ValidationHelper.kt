@@ -7,7 +7,7 @@ fun getIndexLabel(index: Int): String {
     }
 }
 
-fun validateNumberList(input: String?, listSize: Int): List<Float>? {
+fun validateNumberList(input: String?, listSize: Int = 4): List<Float>? {
     val items = input?.split(",")
     val numberList = mutableListOf<Float>()
 

@@ -1,4 +1,4 @@
-fun readNumberList(allowNegativeNumbers: Boolean = true, listSize: Int = 4): List<Float> {
+fun readNumberList(onlyPositiveNumbers: Boolean = false, listSize: Int = 4): List<Float> {
     while (true) {
         print("Provide a number list separated by commas with at least $listSize number(s): ")
         val numberListString = readlnOrNull()
@@ -6,7 +6,7 @@ fun readNumberList(allowNegativeNumbers: Boolean = true, listSize: Int = 4): Lis
         val numberList = validateNumberList(numberListString, listSize)
 
         if (numberList != null) {
-            if (!allowNegativeNumbers && numberList.any { it < 0 }) {
+            if (onlyPositiveNumbers && numberList.any { it <= 0 }) {
                 println("\nPlease, provide a number list containing just positive numbers\n")
             } else {
                 return numberList
@@ -15,7 +15,7 @@ fun readNumberList(allowNegativeNumbers: Boolean = true, listSize: Int = 4): Lis
     }
 }
 
-fun readFloat(prompt: String, allowNegativeNumbers: Boolean = true): Float {
+fun readFloat(prompt: String, onlyPositiveNumbers: Boolean = false): Float {
     while (true) {
         print(prompt)
         val targetString = readlnOrNull()
@@ -23,7 +23,7 @@ fun readFloat(prompt: String, allowNegativeNumbers: Boolean = true): Float {
         val target = validateTarget(targetString)
 
         if (target != null) {
-            if (!allowNegativeNumbers && target < 0) {
+            if (onlyPositiveNumbers && target <= 0) {
                 println("Please, provide a positive target")
             } else {
                 return target

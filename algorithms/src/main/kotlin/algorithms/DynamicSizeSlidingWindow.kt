@@ -12,13 +12,17 @@ object DynamicSizeSlidingWindow {
                     "greater than or equal to the target. Also, you must provide a number list with just positive numbers."
         )
 
-        val numbers = readNumberList(allowNegativeNumbers = false, listSize = 1)
-        val target = readFloat("Provide a positive target target: ", allowNegativeNumbers = false)
+        val numbers = readNumberList(onlyPositiveNumbers = true, listSize = 1)
+        val target = readFloat("Provide a positive target: ", onlyPositiveNumbers = true)
         val dynamicSizeSlidingWindow = dynamicSlidingWindow(numbers, target)
         printResult(dynamicSizeSlidingWindow)
     }
 
     internal fun dynamicSlidingWindow(numbers: List<Float>, target: Float): DynamicSizeSlidingWindowDTO? {
+        require(numbers.isNotEmpty()) { "Number list must not be empty" }
+        require(numbers.all { it > 0f }) { "All numbers must be positive" }
+        require(target > 0f) { "Target must be positive" }
+
         var leftIndex = 0
         var rightIndex = 0
         var sum = numbers[0]
@@ -51,9 +55,10 @@ object DynamicSizeSlidingWindow {
                     shouldShrinkWindow = sum - numbers[leftIndex] >= target
                 }
 
-                if (dynamicSizeSlidingWindow == null
-                    || (sum >= target
-                    && ((rightIndex - leftIndex) + 1) <= (dynamicSizeSlidingWindow.window))
+                val currentWindowSize = ((rightIndex - leftIndex) + 1)
+                if (sum >= target
+                    && (dynamicSizeSlidingWindow == null
+                            || currentWindowSize < (dynamicSizeSlidingWindow.window))
                 ) {
                     dynamicSizeSlidingWindow = DynamicSizeSlidingWindowDTO(
                         window = (rightIndex - leftIndex) + 1,
@@ -71,7 +76,7 @@ object DynamicSizeSlidingWindow {
 
     private fun printResult(dynamicSizeSlidingWindow: DynamicSizeSlidingWindowDTO?) {
         if (dynamicSizeSlidingWindow == null) {
-            println("It wasn't possible to find a window greater than or equal to the target.")
+            println("\nIt wasn't possible to find a window greater than or equal to the target.\n")
         } else {
             println(
                 "It has been found the number ${dynamicSizeSlidingWindow.sum} as the greatest than or equal to the target " +
